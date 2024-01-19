@@ -57,8 +57,7 @@ public class MedianOfTwoSortedArraysBinaryNarrow implements MedianOfTwoSortedArr
         }
 
         //one single
-//        right1 - left1 == 0 || right2 - left2 == 0
-        else {
+        else if (right1 - left1 == 0 || right2 - left2 == 0) {
             int single, left, right;
             int[] nums;
             if (right1 - left1 == 0) {
@@ -89,10 +88,13 @@ public class MedianOfTwoSortedArraysBinaryNarrow implements MedianOfTwoSortedArr
                 double evenMedianIndex = medianIndex(left, right);
                 left = nums[(int) evenMedianIndex];
                 right = nums[(int) (evenMedianIndex + 1)];
-                if(single > right)
+                if (single > right)
                     return right;
                 return max(single, left);
             }
+        } else {
+            //two doubles
+            return (max(nums1[left1], nums2[left2]) + min(nums1[right1], nums2[right2])) / 2.0;
         }
     }
 
@@ -108,8 +110,8 @@ public class MedianOfTwoSortedArraysBinaryNarrow implements MedianOfTwoSortedArr
     }
 
     private static boolean arraysNarrowable(int right1, int left1, int right2, int left2) {
-        return right1 > left1 &&
-                right2 > left2 &&
-                right2 + right1 - left2 - left1 >= 2;
+        return right2 - left2 >= 1 &&
+                right1 - left1 >= 1 &&
+                right2 + right1 - left2 - left1 > 2;
     }
 }
