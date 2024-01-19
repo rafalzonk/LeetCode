@@ -7,7 +7,7 @@ abstract class MedianOfTwoSortedArraysSpec extends Specification {
     @Shared
     MedianOfTwoSortedArrays solution
 
-    def "testSolution"() {
+    def "test solution"() {
         given:
         int[] nums1 = arr1
         int[] nums2 = arr2
