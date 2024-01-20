@@ -21,6 +21,7 @@ abstract class ZigzagConversionSpec extends Specification {
         "PAYPALISHIRING"                                                                                                                                                   | 14   | "PAYPALISHIRING"
         "A"                                                                                                                                                                | 3    | "A"
         "ABCDE"                                                                                                                                                            | 3    | "AEBDC"
+        "ABCDE"                                                                                                                                                            | 4    | "ABCED"
         "Apalindromeisaword,phrase,number,orothersequenceofunitsthatcanbereadthesamewayineitherdirection,withgeneralallowancesforadjustmentstopunctuationandworddividers." | 3    | "Aiosrhem,tseoihartaaeeriwgrlasasnoctaoieplnrmiaodprs,ubroohreunefnttacneedhsmwynihrieto,iheeaalwnefrdutettpntainnwrdvdr.adew,anereqcustbaeeitdcntnlocojmsuuoddis"
     }
 }
@@ -28,5 +29,11 @@ abstract class ZigzagConversionSpec extends Specification {
 class ZigzagConversionWithArraySpec extends ZigzagConversionSpec {
     def setupSpec() {
         solution = new ZigzagConversionWithArray()
+    }
+}
+
+class ZigzagConversionWithCountingSpec extends ZigzagConversionSpec {
+    def setupSpec() {
+        solution = new ZigzagConversionWithCounting()
     }
 }
