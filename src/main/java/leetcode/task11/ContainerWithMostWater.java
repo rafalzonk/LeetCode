@@ -8,15 +8,20 @@ public class ContainerWithMostWater {
         int left = 0, right = height.length - 1;
         int maxCapacity = 0;
         int capacity;
+        int current;
 
         while (left < right) {
             capacity = min(height[left], height[right]) * (right - left);
             maxCapacity = max(maxCapacity, capacity);
 
             if (height[left] < height[right]) {
-                left++;
+                current = height[left];
+                while (current >= height[left] && left < right)
+                    left++;
             } else {
-                right--;
+                current = height[right];
+                while ((current >= height[right]) && right > left)
+                    right--;
             }
         }
 
