@@ -1,12 +1,14 @@
 package leetcode.task23
 
 import leetcode.common.ListNode
-import leetcode.common.ListNodes;
+import leetcode.common.ListNodes
+import spock.lang.Shared;
 import spock.lang.Specification;
 
-class MergeKSortedListsSpec extends Specification {
+abstract class MergeKSortedListsSpec extends Specification {
 
-    MergeKSortedLists solution = new MergeKSortedLists()
+    @Shared
+    MergeKSortedLists solution
 
     def "test solution"() {
         given:
@@ -30,22 +32,16 @@ class MergeKSortedListsSpec extends Specification {
         [[]]                           | []
     }
 
-    def "groovy sucks"() {
-        given:
-        def lists = input
-        println lists
-        ListNode[] listNodes = new ListNode[input.size()]
-        for (i in 0..<input.size()) {
-            int[] list = lists[i]
-            println list
-            listNodes[i] = ListNodes.of(list).head
-        }
+}
 
-        where:
-        input                          | _
-        []                             | _
-        [[]]                           | _
-        [[1, 4, 5], [1, 3, 4], [2, 6]] | _
+class MergeKSortedListsSimpleSpec extends MergeKSortedListsSpec {
+    def setupSpec() {
+        solution = new MergeKSortedListsSimple()
     }
+}
 
+class MergeKSortedListsCountingSpec extends MergeKSortedListsSpec {
+    def setupSpec() {
+        solution = new MergeKSortedListsCounting()
+    }
 }
