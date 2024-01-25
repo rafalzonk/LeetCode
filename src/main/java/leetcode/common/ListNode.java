@@ -26,10 +26,11 @@ public class ListNode {
 
         sb.append(node.val);
         while (node.next != null) {
+            node = node.next;
             sb.append(" -> ");
             sb.append(node.val);
-            node = node.next;
         }
+
         sb.append("]");
 
         return sb.toString();
