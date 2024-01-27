@@ -4,7 +4,7 @@ import java.util.*;
 
 import static java.util.Collections.emptyList;
 
-public class SubstringWithConcatenationOfAllWordsWithSearching implements SubstringWithConcatenationOfAllWords {
+public class SubstringWithConcatenationOfAllWordsWithListSearching implements SubstringWithConcatenationOfAllWords {
     @Override
     public List<Integer> findSubstring(String s, String[] words) {
         int wordLength = words[0].length();
