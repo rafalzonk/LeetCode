@@ -9,11 +9,7 @@ public class BruteForceSudokuSolver implements SudokuSolver {
     public void solveSudoku(char[][] board) {
         int[][] sudokuBoard = toIntMatrix(board);
 
-        printBoard(sudokuBoard);
-
         solve(sudokuBoard, -1, 0);
-
-        printBoard(sudokuBoard);
 
         toCharMatrix(sudokuBoard, board);
     }
