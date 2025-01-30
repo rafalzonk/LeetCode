@@ -6,50 +6,47 @@ public class ScanningSudokuSolver implements SudokuSolver {
 
     @Override
     public void solveSudoku(char[][] board) {
-        solve(board);
-    }
-
-    private void solve(char[][] board) {
         SudokuBoard sudokuBoard = new SudokuBoard(board);
-        System.out.println(sudokuBoard);
 
         if (sudokuBoard.initialCleanUp())
             while (scan(sudokuBoard)) ;
 
-        System.out.println(sudokuBoard);
-
-        board = sudokuBoard.toCharMatrix();
-
-        solveBruteForce(board, -1, 0);
+        sudokuBoard.toCharMatrix(board);
+        if (!isComplete(board)) {
+            solveBruteForce(board, -1, 0);
+        }
 
         printBoard(board);
     }
 
     private boolean scan(SudokuBoard sudokuBoard) {
-        return sudokuBoard.fillSingleDigitCells();
+        boolean changed = sudokuBoard.fillSingleDigitCells();
+        while (sudokuBoard.fillSingleDigitCells()) ;
+
+        return changed;
     }
 
-    private void printBoard(char[][] board) {
+    private boolean isComplete(char[][] board) {
         for (int i = 0; i < MAX_SIZE; i++) {
             for (int j = 0; j < MAX_SIZE; j++) {
-                System.out.print(board[i][j] + " ");
+                if (board[i][j] == '.')
+                    return false;
             }
-            System.out.println();
         }
-        System.out.println();
+        return true;
     }
 
     private boolean solveBruteForce(char[][] board, int x, int y) {
         //find next empty cell in the current row
         for (int i = x + 1; i < MAX_SIZE; i++) {
-            if (board[i][y] == 0) {
+            if (board[i][y] == '.') {
                 return innerSolve(board, i, y);
             }
         }
         //find next empty cell in the next row
         for (int j = y + 1; j < MAX_SIZE; j++) {
             for (int i = 0; i < MAX_SIZE; i++) {
-                if (board[i][j] == 0) {
+                if (board[i][j] == '.') {
                     return innerSolve(board, i, j);
                 }
             }
@@ -99,5 +96,13 @@ public class ScanningSudokuSolver implements SudokuSolver {
         return true;
     }
 
-
+    private void printBoard(char[][] board) {
+        for (int i = 0; i < MAX_SIZE; i++) {
+            for (int j = 0; j < MAX_SIZE; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
 }

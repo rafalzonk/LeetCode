@@ -6,7 +6,7 @@ import java.util.List;
 import static java.util.Collections.emptyList;
 
 class Cell {
-    static final List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
+    private static final List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
     private List<Integer> potentialValues = new ArrayList<>();
 
     private Integer value = 0;
@@ -65,5 +65,13 @@ class Cell {
     @Override
     public String toString() {
         return String.valueOf(value);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Cell other) {
+            return value.equals(other.value) && potentialValues.equals(other.potentialValues);
+        }
+        return false;
     }
 }

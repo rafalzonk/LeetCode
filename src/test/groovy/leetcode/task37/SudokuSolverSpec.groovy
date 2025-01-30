@@ -22,7 +22,7 @@ abstract class SudokuSolverSpec extends Specification implements SudokuTestData 
     }
 }
 
-class ScanningSudokuSolverSpec extends SudokuSolverSpec {
+class ScanningSudokuSolverSpec extends SudokuSolverSpec implements CellSudokuBoardTestData {
     def setupSpec() {
         solution = new ScanningSudokuSolver()
     }
@@ -36,7 +36,7 @@ class CharBasedBruteForceSudokuSolverSpec extends SudokuSolverSpec {
 
 class BruteForceSudokuSolverSpec extends SudokuSolverSpec {
     def setupSpec() {
-//        solution = new BruteForceSudokuSolver()
+        solution = new BruteForceSudokuSolver()
     }
 
     def "shouldCheckIfAMoveIsLegal"() {

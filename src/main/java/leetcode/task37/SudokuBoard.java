@@ -42,7 +42,8 @@ public class SudokuBoard {
         boolean changed = false;
         for (int x = 0; x < MAX_SIZE; x++) {
             for (int y = 0; y < MAX_SIZE; y++) {
-                if (sudokuBoard[x][y].hasOnlyOnePossible()) {
+                Cell cell = sudokuBoard[x][y];
+                if (cell.hasOnlyOnePossible() && !cell.isKnown()) {
                     putNumberInBoard(x, y);
                     changed = true;
                 }
@@ -83,12 +84,13 @@ public class SudokuBoard {
         }
     }
 
-    char[][] toCharMatrix() {
-        char[][] board = new char[MAX_SIZE][MAX_SIZE];
-
+    char[][] toCharMatrix(char[][] board) {
         for (int row = 0; row < MAX_SIZE; row++) {
             for (int col = 0; col < MAX_SIZE; col++) {
-                board[row][col] = (char) (sudokuBoard[row][col].getValue() + 48);
+                if (sudokuBoard[row][col].getValue() == 0) {
+                    board[row][col] = '.';
+                } else
+                    board[row][col] = (char) (sudokuBoard[row][col].getValue() + 48);
             }
         }
         return board;
