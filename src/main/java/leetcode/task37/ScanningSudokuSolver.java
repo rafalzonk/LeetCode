@@ -13,7 +13,7 @@ public class ScanningSudokuSolver implements SudokuSolver {
 
         sudokuBoard.toCharMatrix(board);
         if (!isComplete(board)) {
-            solveBruteForce(board, -1, 0);
+            solveBruteForce(board, -1, 0, sudokuBoard);
         }
 
         printBoard(board);
@@ -36,18 +36,18 @@ public class ScanningSudokuSolver implements SudokuSolver {
         return true;
     }
 
-    private boolean solveBruteForce(char[][] board, int x, int y) {
+    private boolean solveBruteForce(char[][] board, int x, int y, SudokuBoard sudokuBoard) {
         //find next empty cell in the current row
         for (int i = x + 1; i < MAX_SIZE; i++) {
             if (board[i][y] == '.') {
-                return innerSolve(board, i, y);
+                return innerSolve(board, i, y, sudokuBoard);
             }
         }
         //find next empty cell in the next row
         for (int j = y + 1; j < MAX_SIZE; j++) {
             for (int i = 0; i < MAX_SIZE; i++) {
                 if (board[i][j] == '.') {
-                    return innerSolve(board, i, j);
+                    return innerSolve(board, i, j, sudokuBoard);
                 }
             }
         }
@@ -56,20 +56,22 @@ public class ScanningSudokuSolver implements SudokuSolver {
         return true;
     }
 
-    private boolean innerSolve(char[][] board, int x, int y) {
-        for (int n = 49; n < 49 + MAX_SIZE; n++) { //from '1' to '9'
+    private boolean innerSolve(char[][] board, int x, int y, SudokuBoard sudokuBoard) {
+        for (Integer potentialValue : sudokuBoard.get(x, y).getPotentialValues()) {
+            char n = (char) (potentialValue + 48);
             if (isLegalMove(board, x, y, n)) {
-                board[x][y] = (char) (n);
+                board[x][y] = n;
 
-                if (solveBruteForce(board, x, y))
+                if (solveBruteForce(board, x, y, sudokuBoard))
                     return true;
                 board[x][y] = '.';
             }
         }
+
         return false;
     }
 
-    boolean isLegalMove(char[][] board, int x, int y, int n) {
+    boolean isLegalMove(char[][] board, int x, int y, char n) {
         board[x][y] = '.';
         for (int i = 0; i < MAX_SIZE; i++) {
             if (board[x][i] == n) {
