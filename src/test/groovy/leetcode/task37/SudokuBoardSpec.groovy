@@ -60,4 +60,16 @@ class SudokuBoardSpec extends Specification implements CellSudokuBoardTestData, 
         !sudokuBoard.fillSingleDigitCells()
     }
 
+    def "shouldFillSingleOccurrences"() {
+        given:
+        def sudokuBoard = new SudokuBoard(board1)
+
+        when:
+        sudokuBoard.initialCleanUp()
+        sudokuBoard.fillSingleOccurrences()
+
+        then:
+        compareSudokuBoard(sudokuBoard, boardAfterFillingSingleOccurrences)
+    }
+
 }

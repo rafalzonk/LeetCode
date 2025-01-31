@@ -22,6 +22,8 @@ public class ScanningSudokuSolver implements SudokuSolver {
     private boolean scan(SudokuBoard sudokuBoard) {
         boolean changed = sudokuBoard.fillSingleDigitCells();
         while (sudokuBoard.fillSingleDigitCells()) ;
+        changed |= sudokuBoard.fillSingleOccurrences();
+        while (sudokuBoard.fillSingleOccurrences()) ;
 
         return changed;
     }

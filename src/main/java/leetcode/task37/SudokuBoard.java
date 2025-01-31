@@ -52,6 +52,93 @@ public class SudokuBoard {
         return changed;
     }
 
+    boolean fillSingleOccurrences() {
+        boolean changed = false;
+        //rows
+        for (int i = 0; i < MAX_SIZE; i++) {
+            int[] potentialNumbers = new int[MAX_SIZE + 1];
+            for (int j = 0; j < MAX_SIZE; j++) {
+                if (!sudokuBoard[i][j].isKnown()) {
+                    for (Integer n : sudokuBoard[i][j].getPotentialValues()) {
+                        potentialNumbers[n]++;
+                    }
+                }
+            }
+            for (int p = 1; p < MAX_SIZE + 1; p++) {
+                if (potentialNumbers[p] == 1) {
+                    for (int j = 0; j < MAX_SIZE; j++) {
+                        if (sudokuBoard[i][j].getPotentialValues().contains(p)) {
+                            putNumberInBoard(i, j, p);
+                            changed = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        //columns
+        for (int i = 0; i < MAX_SIZE; i++) {
+            int[] potentialNumbers = new int[MAX_SIZE + 1];
+            for (int j = 0; j < MAX_SIZE; j++) {
+                if (!sudokuBoard[j][i].isKnown()) {
+                    for (Integer n : sudokuBoard[j][i].getPotentialValues()) {
+                        potentialNumbers[n]++;
+                    }
+                }
+            }
+            for (int p = 1; p < MAX_SIZE + 1; p++) {
+                if (potentialNumbers[p] == 1) {
+                    for (int j = 0; j < MAX_SIZE; j++) {
+                        if (sudokuBoard[j][i].getPotentialValues().contains(p)) {
+                            putNumberInBoard(j, i, p);
+                            changed = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        //regions
+        for (int i = 0; i < MAX_SIZE / 3; i++) {
+            for (int j = 0; j < MAX_SIZE / 3; j++) {
+                changed |= fillSingleOccurrencesInRegion(3 * i, 3 * j);
+            }
+        }
+
+        return changed;
+    }
+
+    private boolean fillSingleOccurrencesInRegion(int cornerX, int cornerY) {
+        boolean changed = false;
+
+        int[] potentialNumbers = new int[MAX_SIZE + 1];
+        for (int i = 0; i < MAX_SIZE / 3; i++) {
+            for (int j = 0; j < MAX_SIZE / 3; j++) {
+                if (!sudokuBoard[cornerX + i][cornerY + j].isKnown()) {
+                    for (Integer n : sudokuBoard[cornerX + i][cornerY + j].getPotentialValues()) {
+                        potentialNumbers[n]++;
+                    }
+                }
+            }
+        }
+        for (int p = 1; p < MAX_SIZE + 1; p++) {
+            if (potentialNumbers[p] == 1) {
+
+                for (int i = 0; i < MAX_SIZE / 3; i++) {
+                    for (int j = 0; j < MAX_SIZE / 3; j++) {
+                        if (sudokuBoard[cornerX + i][cornerY + j].getPotentialValues().contains(p)) {
+                            putNumberInBoard(cornerX + i, cornerY + j, p);
+                            changed = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return changed;
+    }
+
+
     void putNumberInBoard(int x, int y, int number) {
         sudokuBoard[x][y].setKnownValue(number);
         cleanPotentialNumberFromBoard(x, y, number);
