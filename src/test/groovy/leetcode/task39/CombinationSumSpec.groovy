@@ -8,7 +8,7 @@ class CombinationSumSpec extends Specification {
 
     def "test solution"() {
         expect:
-        result == solution.combinationSum(candidates as int[], target)
+        solution.combinationSum(candidates as int[], target) == result
 
         where:
         candidates   | target || result
