@@ -1,6 +1,5 @@
 package leetcode.common;
 
-import java.util.Collection;
 import java.util.List;
 
 public class ListNodes {
@@ -14,11 +13,6 @@ public class ListNodes {
 
     private ListNodes() {
         size = 0;
-    }
-
-    public ListNodes(ListNode listNode) {
-        head = tail = listNode;
-        size = 1;
     }
 
     public static ListNodes of(List<ListNode> nodes) {
